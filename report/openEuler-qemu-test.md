@@ -1,7 +1,7 @@
 # 在wsl上使用QEMU安装测试X86架构/ARM/RISCV架构的openEuler-24.03-LTS
 ## 系统环境
 - WSL2 (Ubuntu 22.04.3 LTS) 
-- 
+- QEMU verison >= 8.1 # 为了支持 UEFI ，需使用 8.1 版本以上的 QEMU。
 ## 安装虚拟化组件
 ### 安装步骤
 1. 安装QEMU组件
