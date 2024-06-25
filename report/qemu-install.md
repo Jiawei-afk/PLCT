@@ -20,7 +20,7 @@ $ git clone git@github.com:qemu/qemu.git
 首先安装一些必备的依赖
 
 ```shell
-$ sudo apt -y install ninja-build build-essential zlib1g-dev pkg-config libglib2.0-dev binutils-dev libpixman-1-dev libfdt-dev
+$ sudo apt -y install ninja-build build-essential zlib1g-dev pkg-config libglib2.0-dev binutils-dev libpixman-1-dev libfdt-dev python3-venv libspice-protocol-dev libspice-server-dev libusbredirparser-dev libusb-1.0-0-dev
 ```
 创建 build 目录并配置对应的编译选项
 ```
