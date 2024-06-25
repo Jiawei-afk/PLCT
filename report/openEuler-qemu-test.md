@@ -8,7 +8,7 @@
 
 1. 安装QEMU组件
 
-见[QEMU install 指南](./QEMU-install.md)
+见[qemu install 指南](./qemu-install.md)
 
 2. 验证安装是否成功
 
@@ -55,7 +55,14 @@ $ wget https://repo.openeuler.org/openEuler-24.03-LTS/OS/x86_64/images/pxeboot/v
 ```
 - 启动虚拟机
 ```shell
-$ bash start_vm.sh
+$ qemu-system-x86_64 \
+  -name openEulerVM-x86_64 \
+  -m 4G \
+  -smp 4,sockets=2,cores=2,threads=1 \
+  -cpu host \
+  -drive file=openEuler-24.03-LTS-x86_64.qcow2,id=hd0,format=qcow2 \
+  -append 'console=ttyAMA0' \
+  -enable-kvm
 ```
 进入系统~
 ```shell
@@ -86,7 +93,14 @@ $ wget https://repo.openeuler.org/openEuler-24.03-LTS/OS/aarch64/images/pxeboot/
 ```
 启动虚拟机
 ```shell
-$ bash start_vm.sh
+$ qemu-system-aarch64 \
+  -M virt -cpu cortex-a57 \
+  -smp 8 -m 4G \
+  -hda openEuler-24.03-LTS-aarch64.qcow2.xz \
+  -kernel vmlinuz \
+  -initrd initrd.img \
+  -nic user,model=e1000,hostfwd=tcp::2222-:22 \
+  -append 'root=/dev/vda2 console=ttyAMA0'
 ```
 进入系统~
 ```shell
@@ -102,9 +116,6 @@ IP address:     10.0.2.15
 Users online:   1
 
 
-
-[root@localhost ~]#
-[root@localhost ~]#
 [root@localhost ~]# uname -a
 Linux localhost 6.6.0-28.0.0.34.oe2403.aarch64 #1 SMP Mon May 27 22:43:49 CST 2024 aarch64 aarch64 aarch64 GNU/Linux
 ```

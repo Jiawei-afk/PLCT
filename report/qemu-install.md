@@ -20,12 +20,12 @@ $ git clone git@github.com:qemu/qemu.git
 首先安装一些必备的依赖
 
 ```shell
-$ sudo apt -y install ninja-build build-essential zlib1g-dev pkg-config libglib2.0-dev binutils-dev libpixman-1-dev libfdt-dev python3-venv libspice-protocol-dev libspice-server-dev libusbredirparser-dev libusb-1.0-0-dev
+$ sudo apt -y install ninja-build build-essential zlib1g-dev pkg-config libglib2.0-dev binutils-dev libpixman-1-dev libfdt-dev python3-venv libspice-protocol-dev libspice-server-dev libusbredirparser-dev libusb-1.0-0-dev libslirp0
 ```
 创建 build 目录并配置对应的编译选项
 ```
 $ mkdir build && cd build
-$ ../configure --target-list=aarch64-softmmu,aarch64-linux-user,x86_64-softmmu,x86_64-linux-user,riscv64-softmmu,riscv64-linux-user --enable-kvm --enable-spice --enable-guest-agent --enable-libusb --enable-usb-redir --enable-slirp
+$ ../configure --target-list=aarch64-softmmu,aarch64-linux-user,x86_64-softmmu,x86_64-linux-user,riscv64-softmmu,riscv64-linux-user --enable-kvm --enable-spice --enable-guest-agent --enable-libusb --enable-usb-redir --enable-slirp --enable-sdl
 ```
 
 这里我们手动指定了这几个编译选项
