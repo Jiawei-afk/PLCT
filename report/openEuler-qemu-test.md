@@ -26,20 +26,6 @@ parameters uevent
 在[openEuler Repo
 ](http://repo.openeuler.org/openEuler-24.03-LTS/virtual_machine_img/)下载`aarch64`, `riscv64`, `x86_64`的镜像文件并解压，其中riscv64需要额外下载启动固件和官方虚拟机启动脚本。
 
-```shell
-virtual_machine_img/
-├── aarch64
-│   └── openEuler-24.03-LTS-aarch64.qcow2
-├── riscv64
-│   ├── RISCV_VIRT_CODE.fd
-│   ├── RISCV_VIRT_VARS.fd
-│   ├── fw_dynamic_oe_2403_penglai.bin
-│   ├── openEuler-24.03-LTS-riscv64.qcow2
-│   ├── start_vm.sh
-│   └── start_vm_penglai.sh
-└── x86_64
-    └── openEuler-24.03-LTS-x86_64.qcow2
-```
 ## 准备虚拟机网络
 ...待补充
 
@@ -50,19 +36,17 @@ virtual_machine_img/
 ```shell
 $ wget https://repo.openeuler.org/openEuler-24.03-LTS/virtual_machine_img/x86_64/openEuler-24.03-LTS-x86_64.qcow2.xz
 $ xz -d openEuler-24.03-LTS-x86_64.qcow2.xz
-$ wget https://repo.openeuler.org/openEuler-24.03-LTS/OS/x86_64/images/pxeboot/initrd.img
-$ wget https://repo.openeuler.org/openEuler-24.03-LTS/OS/x86_64/images/pxeboot/vmlinuz
 ```
 - 启动虚拟机
 ```shell
 $ qemu-system-x86_64 \
   -name openEulerVM-x86_64 \
-  -m ${memory} \
+  -m 8G \
   -smp 4,sockets=2,cores=2,threads=1 \
   -cpu host \
-  -drive file=${drive},id=hd0,format=qcow2 \
+  -drive file=openEuler-24.03-LTS-x86_64.qcow2,id=hd0,format=qcow2 \
   -device e1000,netdev=net0 \
-  -netdev user,id=net0,hostfwd=tcp::"$ssh_port"-:22 \
+  -netdev user,id=net0,hostfwd=tcp::2222-:22 \
   -enable-kvm
 
 ```
@@ -98,7 +82,7 @@ $ wget https://repo.openeuler.org/openEuler-24.03-LTS/OS/aarch64/images/pxeboot/
 $ qemu-system-aarch64 \
   -M virt -cpu cortex-a57 \
   -smp 8 -m 4G \
-  -hda openEuler-24.03-LTS-aarch64.qcow2.xz \
+  -hda openEuler-24.03-LTS-aarch64.qcow2 \
   -kernel vmlinuz \
   -initrd initrd.img \
   -nic user,model=e1000,hostfwd=tcp::2222-:22 \
