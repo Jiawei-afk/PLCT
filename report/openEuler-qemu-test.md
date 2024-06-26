@@ -1,6 +1,6 @@
 # 在wsl上使用QEMU安装测试X86架构/ARM/RISCV架构的openEuler-24.03-LTS
 ## 系统环境
-- WSL2 (Ubuntu 22.04.3 LTS) 
+- Ubuntu 22.04.3 LTS
 - QEMU verison >= 8.1 # 如果使用`UEFI`引导 ，需使用 8.1 版本以上的 QEMU。
 ## 安装虚拟化组件
 ### 安装步骤
@@ -57,12 +57,14 @@ $ wget https://repo.openeuler.org/openEuler-24.03-LTS/OS/x86_64/images/pxeboot/v
 ```shell
 $ qemu-system-x86_64 \
   -name openEulerVM-x86_64 \
-  -m 4G \
+  -m ${memory} \
   -smp 4,sockets=2,cores=2,threads=1 \
   -cpu host \
-  -drive file=openEuler-24.03-LTS-x86_64.qcow2,id=hd0,format=qcow2 \
-  -append 'console=ttyAMA0' \
+  -drive file=${drive},id=hd0,format=qcow2 \
+  -device e1000,netdev=net0 \
+  -netdev user,id=net0,hostfwd=tcp::"$ssh_port"-:22 \
   -enable-kvm
+
 ```
 进入系统~
 ```shell
