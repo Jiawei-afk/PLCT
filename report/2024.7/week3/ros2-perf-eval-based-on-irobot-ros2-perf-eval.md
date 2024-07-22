@@ -41,13 +41,14 @@ cd ../..
 colcon build
 ```
 ## Run
-
+### 测试过程
 [irobot_benchmark package](https://github.com/irobot-ros/ros2-performance/tree/rolling/irobot_benchmark)包含用于评估的图形拓扑的主要应用和示例。 
 ```shell
 source ~/performance_ws/install/setup.bash
 cd ~/performance_ws/install/irobot_benchmark/lib/irobot_benchmark
 ./irobot_benchmark topology/sierra_nevada.json
 ```
+### 输出结果
 结果将被打印到屏幕上，并保存在目录`./sierra_nevada_log` 中。
 ```
 topology_json_list: topology/sierra_nevada.json
@@ -147,7 +148,22 @@ received_msgs  mean_us   late_msgs late_perc too_late_msgs  too_late_perc  lost_
 5280           124       0         0         0              0              0         0
 ```
 ![alt text](image-2.png)
+### 分析
 
+#### 框架配置参数：
+topology_json_list: 使用 topology/sierra_nevada.json 文件定义系统拓扑。
+system_executor: 使用静态单线程执行器 (StaticSingleThreadedExecutor)。
+node_type: 节点类型为普通的 ROS 2 节点 (Node)。
+ipc: 启用节点间的进程间通信 (IPC)。
+ros_params: 启用 ROS 参数。
+name_threads: 启用线程命名。
+duration_sec: 测试持续时间为 5 秒。
+resources_sampling_per_ms: 每毫秒采样资源数据 1000 次。
+csv_out: 不生成 CSV 输出。
+tracking.is_enabled: 跟踪未启用。
+#### 测试结果分析：
+订阅统计和发布统计显示了每个节点对各个主题的消息处理情况，包括消息大小、接收数量、延迟、丢失等详细信息。
+系统总览部分显示了整体接收消息数量和相关的性能指标。
 ## 扩展性能框架并测试自己的系统
 `irobot_benchmark/topology`包含一些可用于定义系统的 json 文件示例。
 如果要创建自己的 "JSON topology"，请按照[如何创建新拓扑的说明](https://github.com/irobot-ros/ros2-performance/blob/rolling/performance_test_factory/create_new_topology.md)进行操作。 如果要在topology中使用自定义 ROS 2 消息接口，则应查看[performance_test_plugin_cmake](https://github.com/irobot-ros/ros2-performance/blob/rolling/performance_test_plugin_cmake)
