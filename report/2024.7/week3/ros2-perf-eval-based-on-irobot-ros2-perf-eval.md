@@ -1,5 +1,5 @@
 # irobot ros2 perf eval package 的测试和评估
-本文参考[perf eval 的官方说明](https://github.com/irobot-ros/ros2-performance/blob/rolling/README.md)进行测试和评估，详细内容参照链接
+本文参考[ros2-performance的官方说明](https://github.com/irobot-ros/ros2-performance/blob/rolling/README.md)进行测试和评估，详细内容参照链接
 ## env
 - ROS2 Humble
 - ubuntu 22.04 LTS
@@ -7,7 +7,7 @@
 ## build
 请确保在编译前，机器支持Python3，CMake 和 colon
 
-由于该包是针对ROS2 Rolling 开发的，其中涉及到`rclcpp::experimental::EventsExecutor`的内容，在最新的rclcpp中，已经删除了`rclcpp::experimental`中的`EventsExecutor`内容，需要hack操作。
+由于该包是针对ROS2 Rolling 开发的，其中涉及到`rclcpp::experimental::EventsExecutor`的内容，在最新的`rclcpp`中，已经删除了`rclcpp::experimental`下的`EventsExecutor`内容，需要hack操作。
 改动如下
 ```shell
 diff --git a/performance_test/src/executors.cpp b/performance_test/src/executors.cpp
